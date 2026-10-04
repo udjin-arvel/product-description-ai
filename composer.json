@@ -1,0 +1,63 @@
+{
+    "name": "arvelov/product-description-ai",
+    "version": "1.0.0",
+    "description": "Framework-agnostic PHP package for AI product descriptions via DeepSeek Vision API",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.1",
+        "ext-json": "*",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.1|^2.0",
+        "psr/log": "^3.0",
+        "psr/simple-cache": "^3.0",
+        "nyholm/psr7": "^1.8"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.64",
+        "guzzlehttp/guzzle": "^7.9",
+        "laravel/framework": "^10.48|^11.0|^12.0",
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^10.5|^11.0",
+        "symfony/config": "^6.4|^7.0",
+        "symfony/dependency-injection": "^6.4|^7.0",
+        "symfony/http-kernel": "^6.4|^7.0",
+        "symfony/yaml": "^6.4|^7.0",
+        "yiisoft/yii2": "^2.0.49"
+    },
+    "autoload": {
+        "psr-4": {
+            "ProductDescriptionAI\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ProductDescriptionAI\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ProductDescriptionAI\\Laravel\\DeepSeekServiceProvider"
+            ],
+            "aliases": {
+                "DeepSeek": "ProductDescriptionAI\\Laravel\\Facades\\DeepSeek"
+            }
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

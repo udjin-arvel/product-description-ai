@@ -1,0 +1,9 @@
+deepseek:
+    api_key: '%env(DEEPSEEK_API_KEY)%'
+    endpoint: 'https://api.deepseek.com/chat/completions'
+    model: 'deepseek-flash'
+    timeout_seconds: 60
+    max_retries: 3
+    cache:
+        enabled: true
+        ttl: 86400
