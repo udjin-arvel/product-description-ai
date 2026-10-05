@@ -1,6 +1,5 @@
 {
     "name": "arvelov/product-description-ai",
-    "version": "1.0.0",
     "description": "Framework-agnostic PHP package for AI product descriptions via DeepSeek Vision API",
     "type": "library",
     "license": "MIT",
