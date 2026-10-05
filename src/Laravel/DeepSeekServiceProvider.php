@@ -60,6 +60,8 @@ final class DeepSeekServiceProvider extends ServiceProvider
                 $app->bound(LoggerInterface::class) ? $app->make(LoggerInterface::class) : null,
                 (bool) ($cacheConfig['enabled'] ?? true),
                 (int) ($cacheConfig['ttl'] ?? ProductDescriptionService::DEFAULT_CACHE_TTL),
+                self::promptOrNull($cfg['system_prompt'] ?? null),
+                self::promptOrNull($cfg['user_prompt'] ?? null),
             );
         });
     }
@@ -71,5 +73,16 @@ final class DeepSeekServiceProvider extends ServiceProvider
                 __DIR__ . '/../../config/deepseek.php' => \config_path('deepseek.php'),
             ], 'deepseek-config');
         }
+    }
+
+    private static function promptOrNull(mixed $value): ?string
+    {
+        if (!\is_string($value)) {
+            return null;
+        }
+
+        $value = \trim($value);
+
+        return $value === '' ? null : $value;
     }
 }

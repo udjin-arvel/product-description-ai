@@ -67,6 +67,8 @@ final class DeepSeekExtension extends Extension
             new Reference('logger', ContainerBuilder::NULL_ON_INVALID_REFERENCE),
             '%product_description_ai.cache_enabled%',
             '%product_description_ai.cache_ttl%',
+            $config['system_prompt'],
+            $config['user_prompt'],
         ]);
         $serviceDef->setPublic(true);
 

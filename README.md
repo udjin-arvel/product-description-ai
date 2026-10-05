@@ -20,6 +20,18 @@ composer require arvelov/product-description-ai
 export DEEPSEEK_API_KEY=sk-...
 ```
 
+## Демо
+
+Интерактивная форма (фото + название товара) на базе Laravel и UI-прототипа в Docker. Подробности — в [demo/README.md](demo/README.md).
+
+```bash
+cd demo
+copy .env.example .env
+docker compose up --build
+```
+
+Откройте [http://localhost:3000](http://localhost:3000). В `.env` укажите `DEEPSEEK_API_KEY`.
+
 ## Быстрый старт
 
 ```php
@@ -71,6 +83,10 @@ DEEPSEEK_MODEL=deepseek-flash
 DEEPSEEK_CACHE_ENABLED=true
 ```
 
+Базовый промпт задаётся в опубликованном `config/deepseek.php` ключами `system_prompt` и `user_prompt`. `null` оставляет встроенный текст. В своём шаблоне можно использовать `{language}`, `{style}`, `{title}`, `{min_words}`, `{max_words}`, `{length}` и `{extra_instructions}`.
+
+Длина описания необязательна: `minWords` и `maxWords` в `GenerateRequest`. Если оба не заданы, промпт не требует конкретного объёма.
+
 Вызов через фасад или DI:
 
 ```php
@@ -100,6 +116,8 @@ deepseek:
     cache:
         enabled: true
         ttl: 86400
+    # system_prompt: 'Write in {language}. {length}'
+    # user_prompt: 'Product: {title}'
 ```
 
 В контроллере или сервисе инжектируйте `ProductDescriptionAI\Core\ProductDescriptionService`.
@@ -117,6 +135,8 @@ deepseek:
         'requestFactory' => new \Nyholm\Psr7\Factory\Psr17Factory(),
         'streamFactory' => new \Nyholm\Psr7\Factory\Psr17Factory(),
         'cache' => new \ProductDescriptionAI\Yii\Bridge\YiiCacheAdapter(Yii::$app->cache),
+        // 'systemPrompt' => 'Write in {language}. {length}',
+        // 'userPrompt' => 'Product: {title}',
     ],
 ],
 ```

@@ -14,4 +14,15 @@ return [
         'enabled' => (bool) \env('DEEPSEEK_CACHE_ENABLED', true),
         'ttl' => (int) \env('DEEPSEEK_CACHE_TTL', 86_400),
     ],
+
+    /*
+     * null — встроенный промпт пакета.
+     * Свой текст может содержать плейсхолдеры:
+     * {language}, {style}, {title}, {min_words}, {max_words}, {length}, {extra_instructions}.
+     * Если в системном промпте нет {length} или {extra_instructions}, эти строки
+     * дописываются в конец, когда в запросе заданы лимит слов или доп. инструкции.
+     * Пользовательский промпт по умолчанию: "Generate a product description for the item titled: {title}".
+     */
+    'system_prompt' => \env('DEEPSEEK_SYSTEM_PROMPT') ?: null,
+    'user_prompt' => \env('DEEPSEEK_USER_PROMPT') ?: null,
 ];

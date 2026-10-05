@@ -28,6 +28,8 @@ final class Configuration implements ConfigurationInterface
                         ->integerNode('ttl')->defaultValue(86_400)->min(1)->end()
                     ->end()
                 ->end()
+                ->scalarNode('system_prompt')->defaultNull()->end()
+                ->scalarNode('user_prompt')->defaultNull()->end()
             ->end();
 
         return $treeBuilder;

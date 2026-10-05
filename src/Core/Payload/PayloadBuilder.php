@@ -45,6 +45,7 @@ final class PayloadBuilder
             'temperature' => $request->temperature,
             'max_tokens' => $request->maxTokens,
             'response_format' => ['type' => 'json_object'],
+            'thinking' => ['type' => 'disabled'],
         ];
     }
 
@@ -86,5 +87,10 @@ final class PayloadBuilder
         }
 
         throw new \InvalidArgumentException('Unsupported image source type.');
+    }
+
+    public function cacheFragment(GenerateRequest $request): string
+    {
+        return \hash('sha256', $this->promptBuilder->buildSystemPrompt($request) . "\n" . $this->promptBuilder->buildUserText($request));
     }
 }

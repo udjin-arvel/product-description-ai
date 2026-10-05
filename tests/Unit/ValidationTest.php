@@ -35,4 +35,23 @@ final class ValidationTest extends TestCase
         $this->expectException(ValidationException::class);
         new GenerateRequest('', new Base64Image(\base64_encode('x'), 'png'));
     }
+
+    public function testWordLimitsAreOptional(): void
+    {
+        $request = new GenerateRequest('Mug', new Base64Image(\base64_encode('x'), 'png'));
+
+        self::assertNull($request->minWords);
+        self::assertNull($request->maxWords);
+    }
+
+    public function testMinWordsCannotExceedMaxWords(): void
+    {
+        $this->expectException(ValidationException::class);
+        new GenerateRequest(
+            'Mug',
+            new Base64Image(\base64_encode('x'), 'png'),
+            minWords: 200,
+            maxWords: 50,
+        );
+    }
 }

@@ -1,0 +1,27 @@
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: demo/api/Dockerfile
+    ports:
+      - "8080:8000"
+    env_file:
+      - .env
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      LOG_CHANNEL: stderr
+      CACHE_STORE: file
+      SESSION_DRIVER: file
+      DB_CONNECTION: sqlite
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_URL: http://localhost:8080
+    depends_on:
+      - api

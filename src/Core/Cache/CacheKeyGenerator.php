@@ -8,7 +8,7 @@ use ProductDescriptionAI\Core\DTO\GenerateRequest;
 
 final class CacheKeyGenerator
 {
-    public function generate(GenerateRequest $request, string $model): string
+    public function generate(GenerateRequest $request, string $model, string $promptFragment = ''): string
     {
         $parts = [
             'pda:v1',
@@ -18,8 +18,10 @@ final class CacheKeyGenerator
             (string) ($request->language ?? ''),
             (string) ($request->minWords ?? ''),
             (string) ($request->maxWords ?? ''),
+            (string) ($request->style ?? ''),
             (string) $request->temperature,
             \hash('sha256', (string) ($request->extraInstructions ?? '')),
+            $promptFragment,
         ];
 
         return 'product_description_ai:' . \hash('sha256', \implode('|', $parts));

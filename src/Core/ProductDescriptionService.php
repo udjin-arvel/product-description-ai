@@ -33,7 +33,11 @@ final class ProductDescriptionService
 
     public function generate(GenerateRequest $request): GenerateResponse
     {
-        $cacheKey = $this->cacheKeyGenerator->generate($request, $this->config->model);
+        $cacheKey = $this->cacheKeyGenerator->generate(
+            $request,
+            $this->config->model,
+            $this->payloadBuilder->cacheFragment($request),
+        );
 
         if ($this->cacheEnabled && $this->cache !== null) {
             $cached = $this->cache->get($cacheKey);

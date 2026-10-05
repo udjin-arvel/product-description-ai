@@ -24,6 +24,7 @@ final class PayloadBuilderTest extends TestCase
 
         self::assertSame('deepseek-flash', $payload['model']);
         self::assertSame('json_object', $payload['response_format']['type']);
+        self::assertSame('disabled', $payload['thinking']['type']);
         $userContent = $payload['messages'][1]['content'];
         self::assertSame('text', $userContent[0]['type']);
         self::assertStringContainsString('Test product', $userContent[0]['text']);

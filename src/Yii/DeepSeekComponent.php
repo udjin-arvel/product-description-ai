@@ -33,6 +33,10 @@ final class DeepSeekComponent extends Component
 
     public int $cacheTtl = ProductDescriptionService::DEFAULT_CACHE_TTL;
 
+    public ?string $systemPrompt = null;
+
+    public ?string $userPrompt = null;
+
     public ?ClientInterface $httpClient = null;
 
     public ?RequestFactoryInterface $requestFactory = null;
@@ -72,6 +76,8 @@ final class DeepSeekComponent extends Component
             $this->logger,
             $this->cacheEnabled,
             $this->cacheTtl,
+            $this->systemPrompt,
+            $this->userPrompt,
         );
     }
 

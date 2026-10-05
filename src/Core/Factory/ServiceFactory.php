@@ -8,6 +8,7 @@ use ProductDescriptionAI\Core\Config\ClientConfig;
 use ProductDescriptionAI\Core\DeepSeekClient;
 use ProductDescriptionAI\Core\Payload\PayloadBuilder;
 use ProductDescriptionAI\Core\ProductDescriptionService;
+use ProductDescriptionAI\Core\Prompt\PromptBuilder;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -35,13 +36,18 @@ final class ServiceFactory
         ?LoggerInterface $logger = null,
         bool $cacheEnabled = true,
         int $cacheTtlSeconds = ProductDescriptionService::DEFAULT_CACHE_TTL,
+        ?string $systemPrompt = null,
+        ?string $userPrompt = null,
     ): ProductDescriptionService {
         $client = self::createClient($config, $httpClient, $requestFactory, $streamFactory);
 
         return new ProductDescriptionService(
             client: $client,
             config: $config,
-            payloadBuilder: new PayloadBuilder(model: $config->model),
+            payloadBuilder: new PayloadBuilder(
+                promptBuilder: new PromptBuilder($systemPrompt, $userPrompt),
+                model: $config->model,
+            ),
             cache: $cache,
             logger: $logger ?? new NullLogger(),
             cacheTtlSeconds: $cacheTtlSeconds,
